@@ -168,8 +168,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_PASSWORD = 'enaudnrizxqxrmga'
 # DEFAULT_FROM_EMAIL = 'CodingWithNaser Team <noreplay@codingwithnaser.com>'
 
-# django-celery settings
 
+# django-celery settings
 djcelery.setup_loader()
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672
