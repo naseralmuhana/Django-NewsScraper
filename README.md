@@ -1,0 +1,2 @@
+# Django-NewsScraper
+News Website
