@@ -1,0 +1,45 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block site_description %}{% trans 'Scrapy News' %}{% endblock %}">
+    <meta name="author" content="Naser">
+    <title>
+        {% block site_title %}
+        {% trans "Account" %}
+        {% endblock %}
+    </title>
+
+
+    <!-- CSS links -->
+    <link rel="stylesheet" type="text/css" href="{% static 'account_style/account.css' %}">
+    
+
+    {% block base_css %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+    {% block base_content %}
+    {% endblock %}
+
+
+    <!-- JavaScript Links -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="{% static 'account_style/account.js' %}"></script>
+
+
+    {% block base_js %}
+    {% endblock %}
+
+</body>
+
+</html>

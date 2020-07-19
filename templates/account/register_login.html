@@ -1,0 +1,94 @@
+{% extends 'account/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block site_title %}
+{% trans "Log In / Sign Up" %}
+{% endblock %}
+
+{% block base_content %}
+
+<h2>Log In / Sign Up</h2>
+
+<div class="container" id="container">
+  <div class="form-container sign-up-container">
+    <form action="{% url 'account:register' %}" method="POST">
+      {% csrf_token %}
+      <h1>Create Account</h1>
+      <!-- <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span>or use your email for registration</span> -->
+      <!-- <input type="text" placeholder="Name" /> -->
+      {{ form.username }}
+      {{ form.email }}
+      {{ form.password1 }}
+      {{ form.password2 }}
+
+      <button>Sign Up</button>
+      <a href="{% url 'main:home' %}">Home</a>
+    </form>
+  </div>
+
+  <div class="form-container sign-in-container">
+    <form action="{% url 'account:login' %}" method="POST">
+      {% csrf_token %}
+      <h1>Log In</h1>
+      <!-- <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span>or use your account</span> -->
+      <input type="text" name="username" placeholder="Username" required/>
+      <input type="password" name="password" placeholder="Password" required/>
+      <button>Log In</button>
+      <a href="{% url 'account:password_reset' %}">Forgot your password?</a>
+      <a href="{% url 'main:home' %}">Home</a>
+      {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+      {% endif %}
+      {% if messages %}
+      {% for message in messages %}
+
+      <div class="{% if message.tags == 'warning' %}alert{% else %}alert-success{% endif %}">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{ message }}
+      </div>
+
+      {% endfor %}
+      {% endif %}
+    </form>
+
+  </div>
+
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>Welcome Back!</h1>
+        <p>To keep connected with us please login with your personal info</p>
+        <button class="ghost" id="signIn">Log In</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>Hello, Friend!</h1>
+        <p>Enter your personal details and start journey with us</p>
+        <button class="ghost" id="signUp">Sign Up</button>
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          {{ error|escape }}
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

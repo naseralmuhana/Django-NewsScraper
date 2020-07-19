@@ -1,0 +1,1438 @@
+{% load i18n %}
+{% load static %}
+
+<!-- Header -->
+<header>
+    <!-- Header desktop -->
+    <div class="container-menu-desktop">
+
+        <div class="topbar">
+            <div class="content-topbar container h-100">
+                <div class="left-topbar">
+                    <span class="left-topbar-item flex-wr-s-c">
+                        <span>
+                            {{ city_weather.city }}, {{ city_weather.country }}
+                        </span>
+                        <img class="m-b-1 m-rl-8" src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png"
+                            alt="IMG">
+                        <span>
+                            {{ city_weather.temperature }}°c ({{ city_weather.description|title }})
+                        </span>
+                    </span>
+
+                    <!-- <a href="#" class="left-topbar-item">
+                        About
+                    </a> -->
+
+                    {% if user.is_authenticated %}
+                    <a href="#" class="left-topbar-item">
+                        Welcome, {{ user.username }}
+                    </a>
+                    <a href="{% url 'account:change_password' %}" class="left-topbar-item">
+                        Change Password
+                    </a>
+                    <a href="{% url 'account:logout' %}" class="left-topbar-item">
+                        Log Out
+                    </a>
+                    {% else %}
+                    <a href='' class="left-topbar-item">
+                        Welcome, Guest
+                    </a>
+                    <a href="{% url 'account:register' %}" class="left-topbar-item">
+                        Log In / Sign Up
+                    </a>
+                    {% endif %}
+
+                </div>
+
+                <div class="right-topbar">
+                    <a href="#">
+                        <span class="fab fa-facebook-f"></span>
+                    </a>
+
+                    <a href="#">
+                        <span class="fab fa-twitter"></span>
+                    </a>
+
+                    <a href="#">
+                        <span class="fab fa-pinterest-p"></span>
+                    </a>
+
+                    <a href="#">
+                        <span class="fab fa-vimeo-v"></span>
+                    </a>
+
+                    <a href="#">
+                        <span class="fab fa-youtube"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header Mobile -->
+        <div class="wrap-header-mobile">
+            <!-- Logo moblie -->
+            <div class="logo-mobile">
+                <a href="{% url 'main:home' %}"><img src="{% static 'images/icons/logo-01.png' %}" alt="IMG-LOGO"></a>
+            </div>
+
+            <!-- Button show menu -->
+            <div class="btn-show-menu-mobile hamburger hamburger--squeeze m-r--8">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div class="menu-mobile">
+            <ul class="topbar-mobile">
+                <li class="left-topbar">
+                    <span class="left-topbar-item flex-wr-s-c">
+                        <span>
+                            New York, NY
+                        </span>
+
+                        <img class="m-b-1 m-rl-8" src="{% static 'images/icons/icon-night.png' %}" alt="IMG">
+
+                        <span>
+                            HI 58° LO 56°
+                        </span>
+                    </span>
+                </li>
+
+                <li class="left-topbar">
+                    <a href="#" class="left-topbar-item">
+                        About
+                    </a>
+
+                    <a href="#" class="left-topbar-item">
+                        Contact
+                    </a>
+
+                    <a href="#" class="left-topbar-item">
+                        Sing up
+                    </a>
+
+                    <a href="#" class="left-topbar-item">
+                        Log in
+                    </a>
+                </li>
+
+                <li class="right-topbar">
+                    <a href="#">
+                        <span class="fab fa-facebook-f"></span>
+                    </a>
+
+                    <a href="#">
+                        <span class="fab fa-twitter"></span>
+                    </a>
+
+                    <a href="#">
+                        <span class="fab fa-pinterest-p"></span>
+                    </a>
+
+                    <a href="#">
+                        <span class="fab fa-vimeo-v"></span>
+                    </a>
+
+                    <a href="#">
+                        <span class="fab fa-youtube"></span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="main-menu-m">
+                <li>
+                    <a href="#">Home</a>
+                </li>
+
+                {% if new_york_times_mobile %}
+                <li>
+                    {% for website in ny_website_name %}
+                    {% if forloop.counter == 1 %}
+                    <a href="{% url 'main:news_list' slug=website.slug %}">New York Times</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    <ul class="sub-menu-m">
+                        {% for category in new_york_times_mobile %}
+                        <li><a
+                                href="{% url 'main:news_list' slug=category.slug %}">{{ category.name|cut:"New York Times" }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+                {% endif %}
+
+                {% if roya_mobile %}
+                <li>
+                    {% for website in roya_website_name %}
+                    {% if forloop.counter == 1 %}
+                    <a href="{% url 'main:news_list' slug=website.slug %}">Roya</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    <ul class="sub-menu-m">
+                        {% for category in roya_mobile %}
+                        <li><a href="{% url 'main:news_list' slug=category.slug %}">{{ category.name|cut:"Roya" }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+                {% endif %}
+
+                {% if jordan_times_mobile %}
+                <li>
+                    {% for website in jordan_times_website_name %}
+                    {% if forloop.counter == 1 %}
+                    <a href="{% url 'main:news_list' slug=website.slug %}">Jordan Times</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    <ul class="sub-menu-m">
+                        {% for category in jordan_times_mobile %}
+                        <li><a
+                                href="{% url 'main:news_list' slug=category.slug %}">{{ category.name|cut:"Jordan Times" }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+                {% endif %}
+
+                {% if aljazeera_mobile %}
+                <li>
+                    {% for website in aljazeera__website_name %}
+                    {% if forloop.counter == 1 %}
+                    <a href="{% url 'main:news_list' slug=website.slug %}">Aljazeera</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    <ul class="sub-menu-m">
+                        {% for category in aljazeera_mobile %}
+                        <li><a
+                                href="{% url 'main:news_list' slug=category.slug %}">{{ category.name|cut:"Aljazeera" }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+                {% endif %}
+
+                {% if technology_mobile %}
+                <li>
+                    {% for website in tech__website_name %}
+                    {% if forloop.counter == 1 %}
+                    <a href="{% url 'main:news_list' slug=website.slug %}">Technology</a>
+                    {% endif %}
+                    {% endfor %}
+                    <ul class="sub-menu-m">
+                        {% for category in technology_mobile %}
+                        <li><a
+                                href="{% url 'main:news_list' slug=category.slug %}">{{ category.name|cut:"Technology" }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+                {% endif %}
+
+                {% if business_mobile %}
+                <li>
+                    {% for website in business__website_name %}
+                    {% if forloop.counter == 1 %}
+                    <a href="{% url 'main:news_list' slug=website.slug %}">Business</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    <ul class="sub-menu-m">
+                        {% for category in business_mobile %}
+                        <li>
+                            <a href="{% url 'main:news_list' slug=category.slug %}">
+                                {% if category.name == 'Business Arabian Business'  %}
+                                Arabian Business
+                                {% else %}
+                                {{ category.name|cut:"Business" }}
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+                {% endif %}
+
+                <li>
+                    <a href="#">Features</a>
+                    <ul class="sub-menu-m">
+                        <li><a href="#">Category Page v1</a></li>
+                        <li><a href="#">Category Page v2</a></li>
+                        <li><a href="#">Blog Grid Sidebar</a></li>
+                        <li><a href="#">Blog List Sidebar v1</a></li>
+                        <li><a href="#">Blog List Sidebar v2</a></li>
+                        <li><a href="#">Blog Detail Sidebar</a></li>
+                        <li><a href="#">Blog Detail No Sidebar</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+
+                    <span class="arrow-main-menu-m">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+        <!--  -->
+        <div class="wrap-logo container">
+            <!-- Logo desktop -->
+            <div class="logo">
+                <a href="{% url 'main:home' %}"><img src="{% static 'images/icons/logo-01.png' %}" alt="LOGO"></a>
+            </div>
+
+            <!-- search -->
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="search">
+                    <form action="{% url 'main:search_news' %}" method="GET">
+                        <div class="search-form">
+                            <input type="search" name="search_text" value="{{ request.GET.search_text }}"
+                                placeholder="Search for news..">
+                            <input type="submit" value="Search">
+                        </div>
+                        {% for website in websites %}
+                        <input type="checkbox" id="{{ website.id }}" name="check" value="{{ website.key }}">
+                        <label for="{{ website.id }}">{{ website.key }}</label>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <!--  -->
+        <div class="wrap-main-nav">
+            <div class="main-nav">
+
+                <!-- Menu desktop -->
+                <nav class="menu-desktop">
+                    <a class="logo-stick" href="{% url 'main:home' %}">
+                        <img src="{% static 'images/icons/logo-01.png' %}" alt="LOGO">
+                    </a>
+
+                    <ul class="main-menu">
+                        <li class="main-menu-active">
+                            <a href="{% url 'main:home' %}">Home</a>
+                        </li>
+
+                        <li class="mega-menu-item New-York-Times">
+                            {% for website in ny_website_name %}
+                            {% if forloop.counter == 1 %}
+                            <a href="{% url 'main:news_list' slug=website.slug %}">New York Times</a>
+                            {% endif %}
+                            {% endfor %}
+
+                            <div class="sub-mega-menu">
+                                <div class="nav flex-column nav-pills" role="tablist">
+                                    <a class="nav-link active" data-toggle="pill" href="#news-1" role="tab">Middle
+                                        East</a>
+                                    <a class="nav-link" data-toggle="pill" href="#news-2" role="tab">Europe</a>
+                                    <a class="nav-link" data-toggle="pill" href="#news-3" role="tab">Americas</a>
+                                    <a class="nav-link" data-toggle="pill" href="#news-4" role="tab">Asia</a>
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane show active" id="news-1" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in ny_middle_east_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="news-2" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in ny_europe_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="news-3" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in ny_americas_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="news-4" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in ny_asia_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+
+                        <li class="mega-menu-item Roya">
+                            {% for website in roya_website_name %}
+                            {% if forloop.counter == 1 %}
+                            <a href="{% url 'main:news_list' slug=website.slug %}">Roya</a>
+                            {% endif %}
+                            {% endfor %}
+                            <div class="sub-mega-menu">
+                                <div class="nav flex-column nav-pills" role="tablist">
+                                    <a class="nav-link active" data-toggle="pill" href="#enter-1" role="tab">Jordan</a>
+                                    <a class="nav-link" data-toggle="pill" href="#enter-2" role="tab">Palestine</a>
+                                    <a class="nav-link" data-toggle="pill" href="#enter-3" role="tab">World</a>
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane show active" id="enter-1" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in roya_jordan_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="enter-2" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in roya_palestine_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="enter-3" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in roya_world_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="mega-menu-item Jordan-Times">
+                            {% for website in jordan_times_website_name %}
+                            {% if forloop.counter == 1 %}
+                            <a href="{% url 'main:news_list' slug=website.slug %}">Jordan Times</a>
+                            {% endif %}
+                            {% endfor %}
+
+                            <div class="sub-mega-menu">
+                                <div class="nav flex-column nav-pills" role="tablist">
+                                    <a class="nav-link active" data-toggle="pill" href="#business-1"
+                                        role="tab">Local</a>
+                                    <a class="nav-link" data-toggle="pill" href="#business-2" role="tab">Region</a>
+                                    <a class="nav-link" data-toggle="pill" href="#business-3" role="tab">World</a>
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane show active" id="business-1" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in jordan_times_local_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="business-2" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in jordan_times_region_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="business-3" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in jordan_times_world_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="mega-menu-item Aljazeera">
+                            {% for website in aljazeera__website_name %}
+                            {% if forloop.counter == 1 %}
+                            <a href="{% url 'main:news_list' slug=website.slug %}">Aljazeera</a>
+                            {% endif %}
+                            {% endfor %}
+
+                            <div class="sub-mega-menu">
+                                <div class="nav flex-column nav-pills" role="tablist">
+                                    <a class="nav-link active" data-toggle="pill" href="#travel-1" role="tab">Middle
+                                        East</a>
+                                    <a class="nav-link" data-toggle="pill" href="#travel-2" role="tab">Europe</a>
+                                    <a class="nav-link" data-toggle="pill" href="#travel-3" role="tab">US & Canada</a>
+                                    <a class="nav-link" data-toggle="pill" href="#travel-4" role="tab">Asia</a>
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane show active" id="travel-1" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in aljazeera_middle_east_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="travel-2" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in aljazeera_europe_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="travel-3" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in aljazeera_us_canada_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="travel-4" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in aljazeera_asia_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="mega-menu-item Technology">
+                            {% for website in tech__website_name %}
+                            {% if forloop.counter == 1 %}
+                            <a href="{% url 'main:news_list' slug=website.slug %}">Technology</a>
+                            {% endif %}
+                            {% endfor %}
+
+                            <div class="sub-mega-menu">
+                                <div class="nav flex-column nav-pills" role="tablist">
+                                    <a class="nav-link active" data-toggle="pill" href="#life-1" role="tab">New York
+                                        Times</a>
+                                    <a class="nav-link" data-toggle="pill" href="#life-2" role="tab">Aljazeera</a>
+                                    <a class="nav-link" data-toggle="pill" href="#life-3" role="tab">The Verge</a>
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane show active" id="life-1" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in tech_ny_times_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane show" id="life-2" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in tech_aljazeera_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane show" id="life-3" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in tech_verge_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="mega-menu-item Business">
+                            {% for website in business__website_name %}
+                            {% if forloop.counter == 1 %}
+                            <a href="{% url 'main:news_list' slug=website.slug %}">Business</a>
+                            {% endif %}
+                            {% endfor %}
+
+                            <div class="sub-mega-menu">
+                                <div class="nav flex-column nav-pills" role="tablist">
+                                    <a class="nav-link active" data-toggle="pill" href="#video-1" role="tab">Arabian
+                                        Business</a>
+                                    <a class="nav-link" data-toggle="pill" href="#video-2" role="tab">BBC</a>
+                                    <a class="nav-link" data-toggle="pill" href="#video-3" role="tab">New York Times</a>
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane show active" id="video-1" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in business_arabian_business_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane show" id="video-2" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in business_bbc_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane show" id="video-3" role="tabpanel">
+                                        <div class="row">
+                                            {% for news in business_ny_times_header %}
+                                            {% if forloop.counter < 5 %}
+                                            <div class="col-3">
+                                                <!-- Item post -->
+                                                <div>
+                                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                        class="wrap-pic-w hov1 trans-03">
+                                                        <div class="container-img">
+                                                            <img src="{{ news.image }}" alt="Avatar">
+                                                            <div class="middle">
+                                                                <div class="text-img">
+                                                                    {% if user in news.watch_later.all %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Remove from Watch Later"><i
+                                                                            class='fas fa-clock'></i></a>
+                                                                    {% else %}
+                                                                    <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                                        title="Add to Watch Later"><i
+                                                                            class='far fa-clock'></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <div class="p-t-10">
+                                                        <h5 class="p-b-5">
+                                                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                                                class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                {{ news.title|truncatewords:8 }}
+                                                            </a>
+                                                        </h5>
+
+                                                        <span class="cl8">
+                                                            <span class="f1-s-3">
+                                                                {{ news.create_at|date:"M d" }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <a href="#">Features</a>
+                            <ul class="sub-menu">
+                                <li><a href="#">About Us</a></li>
+                                {% if user.is_authenticated %}
+                                <li><a href="{% url 'main:history' username=user.username %}">History</a></li>
+                                <li><a href="{% url 'main:watch_later_list' username=user.username %}">Watch Later</a>
+                                </li>
+                                {% else %}
+                                <li><a title="login to activate it">History</a></li>
+                                <li><a title="login to activate it">Watch Later</a>
+                                </li>
+                                {% endif %}
+                                {% if user.is_superuser %}
+                                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

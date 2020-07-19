@@ -1,0 +1,34 @@
+<div class="flex-wr-s-c m-rl--7">
+
+    {% if news_list.has_previous %}
+    {% if news_list.number > 2 %}
+    <a href="?{% if request.GET.search_text %}search_text={{ request.GET.search_text }}&{% endif %}{% if websites_list_search %}{% for website in websites_list_search %}check={{website}}&{% endfor %}{% endif %}page=1"
+        title="First Page" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7">&laquo;</a>
+    {% endif %}
+    <a href="?{% if request.GET.search_text %}search_text={{ request.GET.search_text }}&{% endif %}{% if websites_list_search %}{% for website in websites_list_search %}check={{website}}&{% endfor %}{% endif %}page={{ news_list.previous_page_number }}"
+        title="Previous Page" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7">Prev</a>
+    {% endif %}
+
+    {% for num in news_list.paginator.page_range %}
+    {% if news_list.number == num %}
+    <a href="?{% if request.GET.search_text %}search_text={{ request.GET.search_text }}&{% endif %}{% if websites_list_search %}{% for website in websites_list_search %}check={{website}}&{% endfor %}{% endif %}page={{ num }}"
+        title="(Current Page) Page {{num}}"
+        class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7 pagi-active">{{ num }}</a>
+    {% elif num > news_list.number|add:'-2' and num < news_list.number|add:'2'  %}
+    <a href="?{% if request.GET.search_text %}search_text={{ request.GET.search_text }}&{% endif %}{% if websites_list_search %}{% for website in websites_list_search %}check={{website}}&{% endfor %}{% endif %}page={{ num }}"
+        title="Page {{num}}" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7">{{ num }}</a>
+    {% endif %}
+    {% endfor %}
+
+    {% if news_list.has_next %}
+    <a href="?{% if request.GET.search_text %}search_text={{ request.GET.search_text }}&{% endif %}{% if websites_list_search %}{% for website in websites_list_search %}check={{website}}&{% endfor %}{% endif %}page={{ news_list.next_page_number }}"
+        title="Next Page" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7">Next</a>
+    {% if news_list.number %}
+    <a href="?{% if request.GET.search_text %}search_text={{ request.GET.search_text }}&{% endif %}{% if websites_list_search %}{% for website in websites_list_search %}check={{website}}&{% endfor %}{% endif %}page={{ news_list.paginator.num_pages }}"
+        title="Last Page" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7">&raquo;</a>
+    {% endif %}
+    {% endif %}
+    <br>
+    (Page {{ news_list.number }} of
+    {{ news_list.paginator.num_pages }})
+</div>

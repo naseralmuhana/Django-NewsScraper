@@ -1,0 +1,65 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block site_description %}{% trans 'Scrapy News' %}{% endblock %}">
+    <meta name="author" content="Naser">
+    <title>
+        {% block site_title %}
+        {% trans "MagNews" %}
+        {% endblock %}
+    </title>
+
+
+
+    <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.png' %}" />
+
+    <!-- CSS links -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fontawesome-5.0.8/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/util.min.css' %}">
+
+    {% block base_css %}
+    {% endblock %}
+
+</head>
+
+<body class="animsition">
+
+    {% block base_content %}
+    {% endblock %}
+
+    <!-- Back to top -->
+    <div class="btn-back-to-top" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <span class="fas fa-angle-up"></span>
+        </span>
+    </div>
+
+    <!-- JavaScript Links -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'vendor/animsition/js/animsition.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    {% block base_js %}
+    {% endblock %}
+
+</body>
+
+</html>

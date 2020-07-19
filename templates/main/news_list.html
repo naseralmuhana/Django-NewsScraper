@@ -1,0 +1,195 @@
+{% extends "base/layout/layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load hitcount_tags %}
+
+
+{% block site_title %}
+{% if search_result %}
+
+{% if text %}
+{{ text }} - MagNews Search
+{% endif %}
+
+{% elif history %}
+History
+
+{% elif watch_later %}
+Watch Later
+
+{% else %}
+
+{{ website_breadcrumb.name|title }}
+
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% include 'main/extra/breadcrmb.html' %}
+
+<!-- Page heading -->
+<div class="container p-t-4 p-b-15">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <h2 class="f1-l-1 cl2 p-b-15">
+                {% if search_result %}
+
+                <div class="search-result-text">
+                    {% if text %}
+
+                    {{ news_count }} Results Found for "<span>{{ text }}</span>"
+                    {% if websites_list %}
+                    in
+                    {% for website in websites_list %}
+                    <span>{{ website }}</span>
+                    {% if forloop.counter < websites_list|length %} ,{% endif %}
+                    {% endfor %}
+                    {% endif %}
+
+                    {% else %}
+
+                    {{ news_count }} Results Found in
+                    {% for website in websites_list %}
+                    <span>{{ website }}</span>
+                    {% if forloop.counter < websites_list|length %} ,{% endif %}
+                    {% endfor %}
+
+                    {% endif %}
+                </div>
+
+                {% elif watch_later %}
+                (<span>{{ news_count }}</span>) Found - Watch Later
+
+                {% elif history %}
+                (<span>{{ news_count }}</span>) Found - History
+
+                {% else %}
+
+                {% if website_breadcrumb.name == 'Business Arabian Business'  %}
+                Arabian Business
+                {% elif "Technology" in website_breadcrumb.name or "Business" in website_breadcrumb.name %}
+                {{ website_breadcrumb.name|cut:'Technology'|cut:'Business' }}
+                {% else %}
+                {{ website_breadcrumb.name|cut:'New York Times'|cut:'Roya'|cut:'Jordan Times'|cut:'Aljazeera' }}
+                {% endif %}- Latest News
+
+                {% endif %}
+
+            </h2>
+        </div>
+        {% if news_list %}
+        <div class="col-md-6 col-sm-12">
+            <div class="upper-pagination">
+                <!-- Pagination -->
+                {% include 'main/extra/paginator.html' %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+
+<!-- Post -->
+<section class="bg0 p-t-10 p-b-55">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-12 p-b-80">
+                <div class="row">
+
+                    {% if news_list %}
+                    {% for news in news_list.object_list %}
+                    <div class="col-md-4 col-sm-6 col-xs-12 p-r-25 p-r-15-sr991">
+                        <!-- Item latest -->
+                        <div class="m-b-45">
+                            <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                class="wrap-pic-w hov1 trans-03 img-size">
+                                <div class="container-img">
+                                    <img src="{{ news.image }}" alt="Avatar" class="image">
+                                    <div class="middle">
+                                        <div class="text-img">
+                                            {% if user in news.watch_later.all %}
+                                            <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                title="Remove from Watch Later"><i class='fas fa-clock'></i></a>
+                                            {% else %}
+                                            <a href="{% url 'main:watch_later_add_remove' id=news.id %}"
+                                                title="Add to Watch Later"><i class='far fa-clock'></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <div class="p-t-16">
+                                <h5 class="p-b-5">
+                                    <a href="{% url 'main:news_detail' website_slug=news.news_website.slug slug=news.slug %}"
+                                        class="f1-m-3 cl2 hov-cl10 trans-03">
+                                        {{ news.title }}
+                                    </a>
+                                </h5>
+
+                                <span class="cl8">
+                                    {% if search_result or history %}
+                                    {% if "_" not in news.news_website.name %}
+                                    <a href="{% url 'main:news_list' slug=news.news_website.slug %}"
+                                        class="f1-s-4 cl8 hov-cl10 trans-03">
+                                        {{ news.news_website.name }}
+                                    </a>
+                                    <span class="f1-s-3 m-rl-3">
+                                        -
+                                    </span>
+                                    {% endif %}
+                                    {% endif %}
+                                    <span class="f1-s-3">
+                                        {{ news.create_at|date:"M d" }}
+                                    </span>
+                                    <span class="f1-s-3 m-rl-3">
+                                        -
+                                    </span>
+                                    <span class="f1-s-3 m-rl-3">
+                                        {% get_hit_count for news %} <i class="fa fa-eye" title="Total views"
+                                            aria-hidden="true"></i>
+                                    </span>
+                                </span>
+                                <br>
+                                {% if history %}
+                                <span class="cl8">
+                                    Watched Date:
+                                    <span class="f1-s-3">
+
+                                        {% for show in history_list %}
+                                        {% if news.title|lower == show.hitcount|lower %}
+                                        {{ show.created }}
+                                        {% endif %}
+                                        {% endfor %}
+
+                                    </span>
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <hr>
+
+                </div>
+                {% if news_list %}
+                <!-- Pagination -->
+                {% include 'main/extra/paginator.html' %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% for news in watch_later_news_test %}
+{{ news }}
+<br><br>
+{% endfor %}
+
+
+{% endblock %}
