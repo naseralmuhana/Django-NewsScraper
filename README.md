@@ -1,2 +1,2 @@
 # Django-NewsScraper
-News Website
+News Website Using Django-Python.
